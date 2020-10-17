@@ -1,0 +1,87 @@
+﻿<mah:MetroWindow x:Class="AllegroMonitor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:local="clr-namespace:AllegroMonitor"
+        mc:Ignorable="d"
+        Title="Allegro Monitor" Height="450" Width="800" WindowStyle="ToolWindow"
+                 Loaded="MetroWindow_Loaded">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!--#region SideMenu-->
+        <StackPanel Grid.Column="0" Background="#ec940e">
+            <Label HorizontalAlignment="Left" Margin="10, 10, 0, 0" FontSize="16">Cena</Label>
+            <TextBox x:Name="minimumPrice" Margin="10, 0, 10, 0" mah:TextBoxHelper.Watermark="Minimum"/>
+            <TextBox x:Name="maximumPrice" Margin="10, 5, 10, 0" mah:TextBoxHelper.Watermark="Maksimum"/>
+            <Label HorizontalAlignment="Left" Margin="10, 10, 0, 0" FontSize="16">Sortuj</Label>
+            <ComboBox x:Name="sortType" Margin="10, 5, 10, 0">
+                <ComboBoxItem Content="Cena: od najniższej"/>
+                <ComboBoxItem Content="Cena: od najwyższej"/>
+                <ComboBoxItem Content="Cena z dostawą: od najniższej"/>
+                <ComboBoxItem Content="Cena z dostawą: od najwyższej"/>
+                <ComboBoxItem Content="Popularność: największa"/>
+                <ComboBoxItem Content="Czas do końca: najmniej"/>
+                <ComboBoxItem Content="Czas do końca: najwięcej"/>
+            </ComboBox>
+        </StackPanel>
+        <!--#endregion-->
+        
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
+            
+            <!--#region TopBar-->
+            <StackPanel Grid.Row="0" Background="#f2ba64" Orientation="Horizontal">
+                <Image Source="\Images\search.png" Width="24" Height="24" Margin="10, 0, 0, 0"/>
+                <TextBox x:Name="searchBar" Margin="10" MinWidth="300" Height="30" VerticalContentAlignment="Center" FontSize="12" mah:TextBoxHelper.Watermark="Szukana fraza"/>
+                <Button x:Name="searchBtn" Height="30" Click="searchBtn_Click">Wyszukaj</Button>
+            </StackPanel>
+            <!--#endregion-->
+
+            <!--#region MainWindow-->
+            <Grid Grid.Row="1">
+                <ListBox ItemsSource="{Binding items}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                    <Image Width="100" Height="100" Source="{Binding image.Source}" HorizontalAlignment="Left" Margin="5, 5, 5, 5"/>
+                                    <StackPanel>
+                                        <Label Content="{Binding name}" VerticalAlignment="Center" Margin="0, 10, 0, 0" FontSize="16"></Label>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label VerticalAlignment="Center">Cena:</Label>
+                                            <Label VerticalAlignment="Center" Content="{Binding price}" FontWeight="Bold"></Label>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label VerticalAlignment="Center">Ilość:</Label>
+                                            <Label VerticalAlignment="Center" Content="{Binding available}" FontWeight="Bold"></Label>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label VerticalAlignment="Center">Najtańsza dostawa:</Label>
+                                            <Label VerticalAlignment="Center" Content="{Binding lowestPrice}" FontWeight="Bold"></Label>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button x:Name="goToAllegroBtn" Grid.Column="1" Background="Orange" Height="40" HorizontalAlignment="Right" Margin="0, 0, 50, 0" Click="goToAllegroBtn_Click">Przejdź do Allegro</Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+            <!--#endregion-->
+        </Grid>
+    </Grid>
+</mah:MetroWindow>
